@@ -74,3 +74,31 @@ npm run test
 npm run test-watch
 ```
 ---
+
+## Chakra UI 
+[Oficial Docu](https://chakra-ui.com/)
+
+#### Examples of use in:
+- index.js
+- Main
+- Hero
+- CTA
+- AirbnbCard
+---
+
+## Absolute routes config
+ Configuration on __jsconfig.json__  
+```js
+"paths": {
+      "@components/*": ["components/*"]
+}
+
+//call like:
+import { <xxx> } from '@componens/<xxx>'
+```
+
+
+ Updates on it requires a server restart
+ 
+ > Some extra code for example is keeped
+---
