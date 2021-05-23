@@ -48,3 +48,29 @@ To use eslint:
 ```bash
 npm run lint
 ```
+---
+## Add Test utilities 
+### Jest Testing Library + examples
+Oficial docu [Jest](https://jestjs.io/docs/)
+
+Examples:
+- test/index
+- test/testExample
+### React Testing Library + examples
+Oficial docu [testing-library](https://testing-library.com/docs/react-testing-library/intro/)
+
+[Midu explain](https://www.youtube.com/watch?v=KYjjtRgg_H0&t=360s)
+
+Examples:
+- components/Note
+- components/Toggaleble
+#### To run all de test use:
+```bash
+npm run test
+```
+
+#### To run test in interactive mode use:
+```bash
+npm run test-watch
+```
+---
