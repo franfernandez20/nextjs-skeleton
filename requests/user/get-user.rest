@@ -1,0 +1,3 @@
+// userID -> 60aaa8b77fee352cd00f8e9f 
+
+GET http://localhost:3000/api/user/60aaa8b77fee352cd00f8e9f

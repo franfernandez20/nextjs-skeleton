@@ -1,0 +1,11 @@
+// UserID --> 60aaa8b77fee352cd00f8e9f
+
+PUT http://localhost:3000/api/user/60aaa8b77fee352cd00f8e9f
+Content-Type: application/json
+
+{
+  "name": "Pepito",
+  "age": 29,
+  "admin": false,
+  "roles": ["client"]
+}

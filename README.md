@@ -102,3 +102,14 @@ import { <xxx> } from '@componens/<xxx>'
  
  > Some extra code for example is keeped
 ---
+
+# Mongo + Mongoose ___baseline___
+- Basic config to access DB. 
+    - Set de var ***MONGODB_URI*** with the connection URL+credentials
+- Define the User model
+- API with end point to mannage the simples action with the model
+- Include ***/request*** folder with defined request to created endPoint in the API
+
+---
+
+
