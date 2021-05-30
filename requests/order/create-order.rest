@@ -1,0 +1,23 @@
+POST http://localhost:3000/api/order
+Content-Type: application/json
+
+{
+  "items": [
+    {
+      "name": "Item2",
+      "prize": 4,
+      "total": 2
+    },
+    {
+      "name": "Item6",
+      "prize": 2,
+      "total": 1
+    },
+    {
+      "name": "Item8",
+      "prize": 4.6,
+      "total": 2
+    }
+  ],
+  "total": 2
+}
