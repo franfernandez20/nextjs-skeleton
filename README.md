@@ -112,4 +112,10 @@ import { <xxx> } from '@componens/<xxx>'
 
 ---
 
+# Simple test cases
+- Orders created to test interaction with db
 
+
+# Progressive Web App
+
+This example uses [`next-pwa`](https://github.com/shadowwalker/next-pwa)
