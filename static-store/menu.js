@@ -1,4 +1,4 @@
-const menu = {
+const MENU = {
   bebidas: {
     cervezas: [
       {
@@ -93,4 +93,4 @@ const menu = {
   ]
 }
 
-export default menu
+export default MENU
