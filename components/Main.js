@@ -1,4 +1,6 @@
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect, useContext } from 'react'
+import { store } from 'hooks/store'
+
 import {
   VStack,
   Text,
@@ -21,156 +23,62 @@ import {
 import { ChevronUpIcon, ChevronDownIcon, BellIcon } from '@chakra-ui/icons'
 
 import menu from 'static-store/menu'
+import { FinalSection } from 'components/FinalSection'
 import orderService from 'services/orders'
 
-const OutModal = ({ modalTitle, isOpen, onOrder, onClose }) => {
-  return (
-    <Modal isOpen={isOpen} onClose={onClose} isCentered>
-      <ModalOverlay />
-      <ModalContent>
-        <ModalHeader>{modalTitle}</ModalHeader>
-        <ModalCloseButton />
-        {/* <ModalBody>dddddddd</ModalBody> */}
-
-        <ModalFooter>
-          <Button colorScheme="blue" mr={3} onClick={onOrder}>
-            Pedir
-          </Button>
-          <Button variant="ghost" onClick={onClose}>
-            Cancelar
-          </Button>
-        </ModalFooter>
-      </ModalContent>
-    </Modal>
-  )
+const FinalSections = ({ sections, sectionKey }) => {
+  console.log('sections', sections)
+  return sections.map((elem, idx) => (
+    <FinalSection elem={elem} key={idx} sectionKey={sectionKey} />
+  ))
 }
 
-const FinalSection = ({ elem, key }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  const [total, setTotal] = useState(0)
-
-  const updateTotal = (n) => () => total + n >= 0 && setTotal(total + n)
-
-  const handleOrder = () => {
-    onOpen()
-  }
-
-  const handleOrderConfirmed = () => {
-    console.log({
-      elem,
-      total
-    })
-    console.log('ORDERED')
-    orderService.create({
-      items: [
-        {
-          name: elem.name,
-          prize: elem.prize,
-          total
-        }
-      ],
-      total: elem.prize * total
-    })
-    onClose()
-  }
-
-  const onCloseCustom = () => {
-    console.log('Closed')
-    onClose()
-  }
-
-  return (
-    <Box
-      key={key}
-      p="6"
-      bgGradient="linear(to-tr, blue.200,blue.600)"
-      // onClick={handleClickSection(key, value)}
-    >
-      <OutModal
-        modalTitle="Confirmación"
-        onClose={onCloseCustom}
-        isOpen={isOpen}
-        onOrder={handleOrderConfirmed}
-      />
-      <Grid
-        h="80px"
-        templateRows="repeat(2, 1fr)"
-        templateColumns="repeat(5, 1fr)"
-        gap={1}
-      >
-        <GridItem rowSpan={1} colSpan={3} bg="tomato">
-          <Text p={2} fontSize="xl">
-            {elem.name}
-          </Text>
-        </GridItem>
-        <GridItem colSpan={2} bg="papayawhip">
-          <Text p={2} fontSize="xl">
-            {elem.prize}€
-          </Text>
-        </GridItem>
-        <GridItem colSpan={2} bg="papayawhip">
-          <Button
-            leftIcon={<BellIcon />}
-            colorScheme="blue"
-            variant="outline"
-            size="sm"
-            onClick={handleOrder}
-          >
-            Pídelo ya
-          </Button>
-        </GridItem>
-        <GridItem colSpan={1} bg="tomato">
-          <Center>
-            <IconButton
-              colorScheme=""
-              aria-label="Mas"
-              size="sm"
-              isRound
-              icon={<ChevronUpIcon />}
-              onClick={updateTotal(1)}
-            />
-          </Center>
-        </GridItem>
-        <GridItem colSpan={1} bg="tomato">
-          <Center>{total}</Center>
-        </GridItem>
-        <GridItem colSpan={1} bg="tomato">
-          <Center>
-            <IconButton
-              colorScheme=""
-              aria-label="Menos"
-              size="sm"
-              isRound
-              icon={<ChevronDownIcon />}
-              onClick={updateTotal(-1)}
-            />
-          </Center>
-        </GridItem>
-      </Grid>
-    </Box>
-  )
-}
-
-const FinalSections = ({ sections }) => {
-  return sections.map((elem, idx) => <FinalSection elem={elem} key={idx} />)
-}
-
-export const Main = (props) => {
-  const [sections, setSections] = useState(menu)
+export const Main = ({ onUpdateSections }) => {
+  const globalState = useContext(store)
+  const { state, dispatch } = globalState
+  const { menu } = state
+  const [sections, setSections] = useState(state.menu)
+  const [sectionKeys, setSectionKeys] = useState([])
   const [finalSection, setFinalSection] = useState(false)
+
   const handleClickSection = (key, value) => () => {
+    console.log('key', key)
+
     if (Array.isArray(value)) setFinalSection(true)
-    setSections(value)
+    let subSections = []
+    switch (true) {
+      case [...sectionKeys, key].length === 1: {
+        subSections = menu[key]
+        break
+      }
+      case [...sectionKeys, key].length === 2:
+        subSections = menu[sectionKeys[0]][key]
+        break
+      case [...sectionKeys, key].length === 3:
+        subSections = menu[sectionKeys[0]][sectionKeys[1]][key]
+        break
+      case [...sectionKeys, key].length === 4:
+        subSections = menu[sectionKeys[0]][sectionKeys[1]][sectionKeys[2]][key]
+        break
+
+      default:
+        break
+    }
+    setSectionKeys((prevSectionKeys) => [...prevSectionKeys, key])
+    setSections(subSections)
   }
+
+  console.log('---', state)
 
   const handleReturn = () => {
     setFinalSection(false)
+    setSectionKeys([])
     setSections(menu)
   }
 
   return (
     <VStack mt={2} mb={2} spacing={0} align="stretch">
-      {!finalSection
+      {!finalSection && Object.keys(sections).length > 0
         ? Object.entries(sections).map(([key, value]) => (
             <Box
               key={key}
@@ -179,10 +87,15 @@ export const Main = (props) => {
               bgGradient="linear(to-tr, blue.200,blue.600)"
               onClick={handleClickSection(key, value)}
             >
-              <Text fontSize="2xl">{key}</Text>
+              <Text textStyle="h2_sec">{key}</Text>
             </Box>
         ))
-        : Array.isArray(sections) && <FinalSections sections={sections} />}
+        : Array.isArray(sections) && (
+            <FinalSections
+              sections={sections}
+              sectionKey={sectionKeys[sectionKeys.length - 1]}
+            />
+        )}
       <Box
         as="button"
         h="50px"
@@ -191,7 +104,7 @@ export const Main = (props) => {
         onClick={handleReturn}
       >
         <Center>
-          <Text fontSize="2xl">Volver</Text>
+          <Text textStyle="h3">Volver</Text>
         </Center>
       </Box>
     </VStack>

@@ -15,5 +15,56 @@ const colors = {
     900: '#01041d'
   }
 }
+// heading: 'Open Sans',
 
-export const theme = extendTheme({ colors })
+const fonts = {
+  heading: 'Raleway',
+  body: 'Open Sans'
+}
+
+const textStyles = {
+  h1: {
+    // you can also use responsive styles
+    fontSize: ['48px', '72px'],
+    fontWeight: 'bold',
+    lineHeight: '110%',
+    letterSpacing: '-2%'
+  },
+  h2: {
+    fontSize: ['32px', '42px'],
+    fontWeight: 'semibold',
+    lineHeight: '110%',
+    letterSpacing: '-1%'
+  },
+  h3: {
+    fontSize: ['24px', '36px'],
+    fontWeight: 'semibold',
+    lineHeight: '110%',
+    letterSpacing: '-1%'
+  },
+  h4: {
+    fontSize: ['20px', '24px'],
+    fontWeight: 'bold',
+    lineHeight: '100%',
+    letterSpacing: '-5%'
+  },
+  h2_sec: {
+    fontSize: ['32px', '42px'],
+    fontWeight: 'semibold',
+    lineHeight: '100%',
+    // letterSpacing: '-1%',
+    textTransform: 'uppercase',
+    fontFamily: 'Raleway',
+    letterSpacing: '0.10rem'
+  },
+  h3_sec: {
+    fontSize: ['24px', '36px'],
+    fontWeight: 'semibold',
+    lineHeight: '100%',
+    // letterSpacing: '-1%',
+    textTransform: 'uppercase',
+    fontFamily: 'Raleway',
+    letterSpacing: '0.10rem'
+  }
+}
+export const theme = extendTheme({ colors, fonts, textStyles })

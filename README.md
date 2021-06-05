@@ -112,4 +112,9 @@ import { <xxx> } from '@componens/<xxx>'
 
 ---
 
-
+# React - Global store manage with context hooks
+- Global object to manage a "shopping cart" actions
+    (Init, Update)
+- Global var to keep the next order.
+    (Add, delete)
+- Simple UI to use previous funcs
