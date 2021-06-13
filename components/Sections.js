@@ -19,7 +19,7 @@ const Section = ({ sectionKey, value, onClickSection }) => (
 )
 
 export const Sections = ({ sections, selectedSection, onClickSection }) => (
-  <VStack mt={2} mb={0} spacing={0} align="stretch">
+  <VStack mt="60px" mb={0} spacing={0} align="stretch">
     {sections && !Array.isArray(sections) && Object.keys(sections).length > 0
       ? Object.entries(sections).map(([key, value]) => (
           <Section

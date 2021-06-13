@@ -118,3 +118,8 @@ import { <xxx> } from '@componens/<xxx>'
 - Global var to keep the next order.
     (Add, delete)
 - Simple UI to use previous funcs
+
+# NextAuth 
+- NextAuth to autentication and authorization
+- Sigin with Google
+- Manage session in api petitions

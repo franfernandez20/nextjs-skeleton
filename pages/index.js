@@ -8,6 +8,7 @@ import { Text } from '@chakra-ui/react'
 import { Footer } from '@components/Footer'
 import { CTA } from '@components/CTA'
 import { Orders } from '@components/Orders'
+import Header from 'components/Header'
 
 function Home ({ menu }) {
   const globalState = useContext(store)
@@ -20,13 +21,15 @@ function Home ({ menu }) {
 
   return (
     <>
+      {/* <Page /> */}
+      <Header/>
       {Object.keys(state.menu).length > 0 && (
         <MenuComponent menu={state.menu} />
       )}
       <Orders />
-      <Footer>
+      {/* <Footer>
         <Text>Next ❤️ Chakra</Text>
-      </Footer>
+      </Footer> */}
       <CTA />
     </>
   )

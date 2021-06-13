@@ -39,8 +39,30 @@ export const FinalSection = ({ elem, sectionKey }) => {
       precision: 0
     })
 
+  const inc = getIncrementButtonProps()
+  const dec = getDecrementButtonProps()
+  const input = getInputProps({ isReadOnly: false })
+
   const handleOrder = () => {
     onOpen()
+  }
+
+  const handleAdd = () => {
+    const total = getInputProps()['aria-valuenow']
+    const value = {
+      id: elem.id,
+      sectionKey,
+      name: elem.name,
+      prize: elem.prize,
+      total
+    }
+    console.log({
+      elem,
+      total: getInputProps()['aria-valuenow']
+    })
+    console.log('ORDERED')
+    dispatch({ type: 'update-menu-section', value })
+    dispatch({ type: 'add-order', value })
   }
 
   const handleOrderConfirmed = () => {
@@ -61,10 +83,6 @@ export const FinalSection = ({ elem, sectionKey }) => {
     dispatch({ type: 'add-order', value })
     onClose()
   }
-
-  const inc = getIncrementButtonProps()
-  const dec = getDecrementButtonProps()
-  const input = getInputProps({ isReadOnly: false })
 
   const onCloseCustom = () => {
     console.log('Closed')
@@ -131,6 +149,7 @@ export const FinalSection = ({ elem, sectionKey }) => {
               aria-label="Añadir al pedido"
               border="2px"
               icon={<AddIcon />}
+              onClick={handleAdd}
             />
           </ButtonGroup>
         </GridItem>

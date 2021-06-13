@@ -1,4 +1,5 @@
-import mongoose from 'mongoose'
+import mongoose, { Schema } from 'mongoose'
+import Client from 'models/Client'
 
 /* This Schema must correspond to a collection in your MongoDB database. */
 const OrderSchema = new mongoose.Schema({
@@ -9,8 +10,21 @@ const OrderSchema = new mongoose.Schema({
     default: Date.now,
     required: [true, 'Date is required']
   },
+  client: {
+    type: Schema.Types.ObjectId,
+    ref: 'Client',
+    required: [true, 'Client is required']
+  },
   /* list with the items in the order */
-  items: [{ name: String, prize: Number, total: Number }],
+  items: [
+    {
+      id: Number,
+      name: String,
+      sectionKey: String,
+      prize: Number,
+      total: Number
+    }
+  ],
   total: {
     /* The total sum of items prize */
 

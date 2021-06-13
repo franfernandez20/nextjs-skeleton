@@ -8,7 +8,7 @@ const create = async (newObject) => {
     },
     body: JSON.stringify(newObject)
   })
-  return console.log(response)
+  return console.log('ORDER-->FRONT_SERVICE', response)
 }
 
 const getAll = async () => {
